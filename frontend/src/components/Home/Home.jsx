@@ -1,9 +1,10 @@
 import React from 'react'
-import Header from './Header'
 import { Link } from 'react-router-dom';
 import Write from '../Write/Write';
-
+import LogoutButton from '../Logout/LogoutButton';
 const Home = () => {
+
+
   const blogPosts = [
     {
       id: 1,
@@ -44,6 +45,17 @@ const Home = () => {
                   About
                 </a>
               </li>
+              <li>
+                <a href="/login" className="text-gray-600 hover:text-gray-800">
+                  Login
+                </a>
+              </li>
+              <li>
+                <a href="/register" className="text-gray-600 hover:text-gray-800">
+                  Sign up
+                </a>
+              </li>
+              <LogoutButton />
             </ul>
           </nav>
         </div>
