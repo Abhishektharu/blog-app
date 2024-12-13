@@ -1,46 +1,87 @@
-import React, { useState } from "react";
-import { useAuth } from "@/context/AuthContext"; // Adjust the path
-import axios from "axios";
+import { useState } from "react";
+import { useAuth } from "@/hooks/AuthProvider";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const { login } = useAuth();
+  const auth = useAuth();
 
-  const handleSubmit = async (e) => {
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleSubmitEvent = (e) => {
     e.preventDefault();
-    try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
-        email,
-        password,
-      });
-      const { token, user } = res.data;
-      login(user, token); // Save user and token to global state
-      alert("Login successful!");
-    } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong.");
+    if (input.email !== "" && input.password !== "") {
+      auth.loginAction(input);
+      return;
     }
+    alert("Please provide valid input");
+  };
+
+  const handleInput = (e) => {
+    const { name, value } = e.target;
+    setInput((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   return (
-    <div className="login">
-      <h1>Login</h1>
-      {error && <p className="error">{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Login</button>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <form
+        onSubmit={handleSubmitEvent}
+        className="w-full max-w-sm p-6 bg-white rounded-lg shadow-md"
+      >
+        <h2 className="mb-6 text-2xl font-semibold text-center text-gray-800">
+          Login
+        </h2>
+
+        <div className="mb-4">
+          <label
+            htmlFor="user-email"
+            className="block mb-2 text-sm font-medium text-gray-700"
+          >
+            Email:
+          </label>
+          <input
+            type="email"
+            id="user-email"
+            name="email"
+            placeholder="example@yahoo.com"
+            onChange={handleInput}
+            className="w-full px-4 py-2 text-sm text-gray-700 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          />
+          <p className="mt-1 text-xs text-gray-500">
+            Please enter a valid email address.
+          </p>
+        </div>
+
+        <div className="mb-6">
+          <label
+            htmlFor="password"
+            className="block mb-2 text-sm font-medium text-gray-700"
+          >
+            Password:
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="••••••••"
+            onChange={handleInput}
+            className="w-full px-4 py-2 text-sm text-gray-700 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          />
+          <p className="mt-1 text-xs text-gray-500">
+            Password must be at least 6 characters.
+          </p>
+        </div>
+
+        <button
+          type="submit"
+          className="w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-400 focus:outline-none"
+        >
+          Login
+        </button>
       </form>
     </div>
   );

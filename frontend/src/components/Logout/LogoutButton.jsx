@@ -1,18 +1,14 @@
 import React from "react";
-import { useAuth } from "@/context/AuthContext";
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
+import { useAuth } from "@/hooks/AuthProvider";
+
 
 const LogoutButton = () => {
-  const { logout } = useAuth();
-
-  const handleLogout = () => {
-    logout();
-    alert("Logged out successfully!");
-  };
+  const auth  = useAuth();
 
   return (
-    <button onClick={handleLogout} className="btn btn-danger">
-      Logout
+    <button onClick={() => auth.logOut()} className="btn-submit">
+          logout
     </button>
   );
 };

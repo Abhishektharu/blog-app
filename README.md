@@ -3,12 +3,13 @@
 ## To-Do List Frontend
 
 - [x] Home, About, Register , Login (completed)
-- [] Tailwind , UI improvements
-- [] Task 3 (completed)
+- [ ] Tailwind , UI improvements
+- [ ] Task 3 (completed)
 
 ## To-do Backend
 
 - [X] Authentication: User Registration , Login : Authorization
+- [ ] User and email Validation;
 
 - [X] Middleware
 
@@ -26,3 +27,4 @@ Use the ProtectedRoute component for pages that require authentication.
 
 - [X] Add Logout Functionality
 Provide a logout option to clear the token and user data.
+
