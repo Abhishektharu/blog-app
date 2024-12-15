@@ -5,6 +5,7 @@
 - [x] Home, About, Register , Login (completed)
 - [ ] Tailwind , UI improvements
 - [ ] Task 3 (completed)
+- [ ] Add toast to success create post , login , signup , logout
 
 ## To-do Backend
 
@@ -27,4 +28,3 @@ Use the ProtectedRoute component for pages that require authentication.
 
 - [X] Add Logout Functionality
 Provide a logout option to clear the token and user data.
-

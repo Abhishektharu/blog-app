@@ -1,29 +1,53 @@
+import { useAuth } from "@/hooks/AuthProvider";
 import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import axios from "axios";
 
 const BlogEditor = () => {
+  const  auth  = useAuth();
+
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [content, setContent] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    // console.log(auth.token)
 
     if (!title || !author || !content) {
       setError("All fields are required.");
       return;
     }
 
-    console.log({ title, author, content }); // Replace with API call or state update
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/api/posts",
+        { title, content },
+        {
+          headers: {
+            Authorization: `Bearer ${auth.token}`,
+          },
+        }
+      );
+      
+      
 
-    // Reset form
-    setTitle("");
-    setAuthor("");
-    setContent("");
-    setError("");
-    alert("Post successfully created!");
+      // Reset form
+      setTitle("");
+      setAuthor("");
+      setContent("");
+      setError("");
+      setSuccess("Post created successfully!");
+    } catch (err) {
+      setError(err.response?.data?.message || "Something went wrong.");
+      // console.log(err);
+      
+    }
+
+    console.log({ title, author, content }); // Replace with API call or state update
   };
 
   return (
@@ -40,7 +64,10 @@ const BlogEditor = () => {
         <form onSubmit={handleSubmit}>
           {/* Title */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-medium mb-2" htmlFor="title">
+            <label
+              className="block text-gray-700 font-medium mb-2"
+              htmlFor="title"
+            >
               Title
             </label>
             <input
@@ -55,7 +82,10 @@ const BlogEditor = () => {
 
           {/* Author */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-medium mb-2" htmlFor="author">
+            <label
+              className="block text-gray-700 font-medium mb-2"
+              htmlFor="author"
+            >
               Author
             </label>
             <input
@@ -70,7 +100,10 @@ const BlogEditor = () => {
 
           {/* Content */}
           <div className="mb-6">
-            <label className="block text-gray-700 font-medium mb-2" htmlFor="content">
+            <label
+              className="block text-gray-700 font-medium mb-2"
+              htmlFor="content"
+            >
               Content
             </label>
             <ReactQuill
