@@ -7,6 +7,7 @@ import About from "./components/About/About";
 import ProtectedRoute from "./routes/protectedRoute";
 import { Toaster } from "react-hot-toast";
 import AuthProvider from "./hooks/AuthProvider";
+import PostDetail from "./components/Post/PostDetails";
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
             </Route>
         <Route path="/about" element={<About />} />
         {/* <Route path="/write" element={<Write />} /> */}
+        <Route path="/post/:id" element={<PostDetail />} />
       </Routes>
     </AuthProvider>
     </BrowserRouter>

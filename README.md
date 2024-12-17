@@ -28,3 +28,4 @@ Use the ProtectedRoute component for pages that require authentication.
 
 - [X] Add Logout Functionality
 Provide a logout option to clear the token and user data.
+- [ ] get request for blog post
